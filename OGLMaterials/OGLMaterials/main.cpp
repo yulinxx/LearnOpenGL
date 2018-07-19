@@ -17,10 +17,10 @@
 #pragma comment (lib, "glfw3.lib") 
 
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void processInput(GLFWwindow *window);
+void framebuffer_size_callback(GLFWwindow* pWnd, int width, int height);
+void mouse_callback(GLFWwindow* pWnd, double xpos, double ypos);
+void scroll_callback(GLFWwindow* pWnd, double xoffset, double yoffset);
+void processInput(GLFWwindow *pWnd);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -46,19 +46,19 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-	if (window == NULL)
+	GLFWwindow* pWnd = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+	if (pWnd == NULL)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
+		std::cout << "Failed to create GLFW pWnd" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetScrollCallback(window, scroll_callback);
+	glfwMakeContextCurrent(pWnd);
+	glfwSetFramebufferSizeCallback(pWnd, framebuffer_size_callback);
+	glfwSetCursorPosCallback(pWnd, mouse_callback);
+	glfwSetScrollCallback(pWnd, scroll_callback);
 
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(pWnd, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -117,28 +117,26 @@ int main()
 	glBindVertexArray(0);
 
 	// 光源
-	unsigned int lightVAO, lightVBO;
-	glGenVertexArrays(1, &lightVAO);
-	glGenBuffers(1, &lightVBO);
+	unsigned int lampVAO, lampVBO;
+	glGenVertexArrays(1, &lampVAO);
+	glGenBuffers(1, &lampVBO);
 
-	glBindVertexArray(lightVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, lightVBO);
+	glBindVertexArray(lampVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, lampVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, lightVBO);
-
+	glBindBuffer(GL_ARRAY_BUFFER, lampVBO);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(pWnd))
 	{
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		processInput(window);
+		processInput(pWnd);
 
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// 物体1
@@ -147,7 +145,7 @@ int main()
 		cubeShader.setVec3("viewPos", camera.Position);
 
 		// 光源定义
-		glm::vec3 lightColor;
+		glm::vec3 lightColor = glm::vec3();
 		lightColor.x = sin(glfwGetTime() * 2.0f);
 		lightColor.y = sin(glfwGetTime() * 0.7f);
 		lightColor.z = sin(glfwGetTime() * 1.3f);
@@ -171,17 +169,14 @@ int main()
 		cubeShader.setMat4("projection", projection);
 		cubeShader.setMat4("view", view);
 
-		// world transformation
-		glm::mat4 model;
+		glm::mat4 model = glm::mat4();
 		cubeShader.setMat4("model", model);
 
-		// render the cube
 		glBindVertexArray(cubeVAO); // VAO
 		glDrawArrays(GL_TRIANGLES, 0, 36);	// 绘制经灯光照射的立方体
 
 		// 物体2
 		// ---绘制一个和物体材质一样颜色的立方体 进行对比
-
 		model = glm::mat4();
 		model = glm::translate(model, glm::vec3(0.3f, 0.8f, 1.3f));
 		cubeShader.setMat4("model", model);
@@ -189,7 +184,7 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 36);  // 绘制原色的立方体
 		
 		// ---灯泡
-		glBindBuffer(GL_ARRAY_BUFFER, lightVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, lampVBO);
 		lampShader.useShaderProgram();
 		lampShader.setMat4("projection", projection);
 		lampShader.setMat4("view", view);
@@ -200,47 +195,47 @@ int main()
 		lampShader.setMat4("model", model);		// 小立方体代表灯泡
 
 
-		glBindVertexArray(lightVAO);	// VAO 切换
+		glBindVertexArray(lampVAO);	// VAO 切换
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(pWnd);
 		glfwPollEvents();
 	}
 
 	glDeleteVertexArrays(1, &cubeVAO);
 	glDeleteBuffers(1, &cubeVBO);
-	glDeleteVertexArrays(1, &lightVAO);
-	glDeleteBuffers(1, &lightVBO);
+	glDeleteVertexArrays(1, &lampVAO);
+	glDeleteBuffers(1, &lampVBO);
 
 	glfwTerminate();
 	return 0;
 }
 
 
-void processInput(GLFWwindow *window)
+void processInput(GLFWwindow *pWnd)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(pWnd, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(pWnd, true);
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	if (glfwGetKey(pWnd, GLFW_KEY_W) == GLFW_PRESS)
 		camera.ProcessKeyboard(FORWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	if (glfwGetKey(pWnd, GLFW_KEY_S) == GLFW_PRESS)
 		camera.ProcessKeyboard(BACKWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	if (glfwGetKey(pWnd, GLFW_KEY_A) == GLFW_PRESS)
 		camera.ProcessKeyboard(LEFT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	if (glfwGetKey(pWnd, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void framebuffer_size_callback(GLFWwindow* pWnd, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
 
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+void mouse_callback(GLFWwindow* pWnd, double xpos, double ypos)
 {
 	if (firstMouse)
 	{
@@ -259,7 +254,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 }
 
 
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+void scroll_callback(GLFWwindow* pWnd, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(yoffset);
 }
