@@ -27,7 +27,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera 相机
-Camera camera(glm::vec3(0.0f, 2.0f, 2.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 2.5f));
 
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -37,7 +37,7 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 lightPos(0.0f, 0.0f, 5.0f);
 
 int main()
 {
@@ -72,35 +72,35 @@ int main()
 	Shader lampShader("lamp.vs", "lamp.fs");
 
 	float vertices[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,          0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,          0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,         -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	// 后
+		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 			0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,         0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,			0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,	// 前
+		0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,			0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,			-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,	// 左
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,			-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,			-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,			0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,	// 右
+		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,			0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,			0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,			0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	// 下
+		0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,			0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,			-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,			0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	// 上
+		0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,			0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,			-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 	
 	unsigned int cubeVAO, cubeVBO;
+
 	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &cubeVBO);
-
 	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
@@ -113,7 +113,6 @@ int main()
 	// normal attribute 向量
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-
 	glBindVertexArray(0);
 
 	// 光源
@@ -141,7 +140,7 @@ int main()
 
 		// 物体1
 		cubeShader.useShaderProgram();
-		cubeShader.setVec3("light.position", lightPos);
+		cubeShader.setVec3("light.pos", lightPos);
 		cubeShader.setVec3("viewPos", camera.Position);
 
 		// 光源定义
@@ -149,7 +148,7 @@ int main()
 		lightColor.x = sin(glfwGetTime() * 2.0f);
 		lightColor.y = sin(glfwGetTime() * 0.7f);
 		lightColor.z = sin(glfwGetTime() * 1.3f);
-		glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f);
+		glm::vec3 diffuseColor =lightColor   * glm::vec3(0.5f);
 		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
 
 		cubeShader.setVec3("light.ambient", ambientColor);
@@ -160,7 +159,7 @@ int main()
 		cubeShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
 		cubeShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
 		cubeShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f); 
-		cubeShader.setFloat("material.shininess", 32.0f);
+		cubeShader.setFloat("material.shininess", 60.0f);
 
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 
 				(float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -172,11 +171,15 @@ int main()
 		glm::mat4 model = glm::mat4();
 		cubeShader.setMat4("model", model);
 
-		glBindVertexArray(cubeVAO); // VAO
+		glBindVertexArray(cubeVAO);			// VAO
+		glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);	// 绘制经灯光照射的立方体
 
 		// 物体2
 		// ---绘制一个和物体材质一样颜色的立方体 进行对比
+		cubeShader.setVec3("light.ambient", -ambientColor);
+		cubeShader.setVec3("light.diffuse", -diffuseColor);
+
 		model = glm::mat4();
 		model = glm::translate(model, glm::vec3(1.3f, 0.0f, 0.0f));
 		cubeShader.setMat4("model", model);
@@ -184,7 +187,6 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 36);  // 绘制原色的立方体
 		
 		// ---灯泡
-		glBindBuffer(GL_ARRAY_BUFFER, lampVBO);
 		lampShader.useShaderProgram();
 		lampShader.setMat4("projection", projection);
 		lampShader.setMat4("view", view);
@@ -192,7 +194,7 @@ int main()
 		model = glm::mat4();
 		model = glm::translate(model, lightPos);
 		model = glm::scale(model, glm::vec3(0.2f)); // 缩小立方体
-		lampShader.setMat4("model", model);		// 小立方体代表灯泡
+		lampShader.setMat4("model", model);		  // 小立方体代表灯泡
 
 
 		glBindVertexArray(lampVAO);	// VAO 切换
@@ -258,4 +260,3 @@ void scroll_callback(GLFWwindow* pWnd, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(yoffset);
 }
-

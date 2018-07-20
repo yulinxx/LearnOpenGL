@@ -15,6 +15,7 @@ out vec3 Normal;	// 向量 传至FragementShader
 
 void main()
 {
+	// 乘法从右向左读
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 
 	// 在世界空间中进行所有的光照计算

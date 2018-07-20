@@ -7,16 +7,18 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-out vec3 Normal;
-out vec3 FragPos;
+out vec3 FragPos;   // fragment's position 
+
+out vec3 Normal;	// 向量 传至FragementShader
+
+
 
 void main()
 {
-    // 注意乘法要从右向左读
+	// 乘法从右向左读
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 
-	// 世界空间中进行所有的光照计算
+	// 在世界空间中进行所有的光照计算
     FragPos = vec3(model * vec4(aPos, 1.0)); // 转换成世界空间坐标
-
-	Normal = aNormal;
+    Normal = aNormal;
 }

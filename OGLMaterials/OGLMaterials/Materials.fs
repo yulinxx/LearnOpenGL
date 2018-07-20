@@ -8,7 +8,7 @@ out vec4 FragColor;
 
 //  光源定义 结构体
 struct Light {
-    vec3 position;	// 光源位置
+    vec3 pos;	// 光源位置
 
     vec3 ambient;	// 环境光照
     vec3 diffuse;		// 漫反射光照
@@ -26,7 +26,6 @@ struct Material {
 uniform Light light;
 uniform Material material;
 
-uniform vec3 lightPos;
 uniform vec3 viewPos;
 
 
@@ -37,7 +36,7 @@ void main()
 
     // 漫反射 
     vec3 norm = normalize(Normal);	// 标准化为单位向量
-    vec3 lightDir = normalize(lightPos - FragPos);	// 光照方向 片段指向光源
+    vec3 lightDir = normalize(light.pos - FragPos);	// 光照方向 片段指向光源
     float diff = max(dot(norm, lightDir), 0.0);	// 物体表面法向量与光照向量的点乘
     vec3 diffuse =  light.diffuse * (diff * material.diffuse);
 

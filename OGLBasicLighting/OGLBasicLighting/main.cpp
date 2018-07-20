@@ -39,7 +39,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 // lighting
-glm::vec3 lightPos(0.2f, 0.3f, 2.0f);
+glm::vec3 lightPos(-0.86f, 0.0f, 2.0f);
 
 int main()
 {
@@ -77,11 +77,11 @@ int main()
 
 	// 立方体 顶点3 向量3  用三角形构成
 	float vertices[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	// 前
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	// 后
 		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 			0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,			0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,	// 后
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,			0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,	// 前
 		0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,			0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
@@ -93,19 +93,19 @@ int main()
 		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,			0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
 		0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,			0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,			0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	// 上
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,			0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	// 下
 		0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,			0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
 		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,			-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,			0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	// 下
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,			0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	// 上
 		0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,			0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
 		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,			-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 
 	// Cube Object 立方体
-	unsigned int cubeVBO,  cubeVAO;
-	glGenVertexArrays(1, &cubeVAO);
+	unsigned int  cubeVAO, cubeVBO;
 
+	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &cubeVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -120,8 +120,7 @@ int main()
 	glEnableVertexAttribArray(1);
 
 	// lamp  灯泡
-	unsigned int lampVAO;
-	unsigned int lampVBO;
+	unsigned int lampVAO, lampVBO;
 	glGenVertexArrays(1, &lampVAO);
 	glBindVertexArray(lampVAO);
 
@@ -140,7 +139,7 @@ int main()
 
 		processInput(window);
 
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// 参数设置
@@ -152,7 +151,9 @@ int main()
 		cubeShader.setFloat("specularStrength", 1.5); // 灯光位置
 
 		// 立方体
-		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 
+			(float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
 		glm::mat4 view = camera.GetViewMatrix();
 		cubeShader.setMat4("projection", projection);
 		cubeShader.setMat4("view", view);
@@ -162,7 +163,6 @@ int main()
 		cubeShader.setMat4("model", model);
 
 		glBindVertexArray(cubeVAO);
-		glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);		// 三角形方式绘制
 
 		// 灯泡
@@ -176,7 +176,6 @@ int main()
 		lampShader.setMat4("model", model);
 
 		glBindVertexArray(lampVAO);
-		glBindBuffer(GL_ARRAY_BUFFER, lampVBO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glfwSwapBuffers(window);
