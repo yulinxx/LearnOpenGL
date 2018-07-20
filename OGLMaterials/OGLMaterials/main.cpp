@@ -27,7 +27,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera 相机
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 2.0f, 2.0f));
 
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -178,7 +178,7 @@ int main()
 		// 物体2
 		// ---绘制一个和物体材质一样颜色的立方体 进行对比
 		model = glm::mat4();
-		model = glm::translate(model, glm::vec3(0.3f, 0.8f, 1.3f));
+		model = glm::translate(model, glm::vec3(1.3f, 0.0f, 0.0f));
 		cubeShader.setMat4("model", model);
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);  // 绘制原色的立方体
