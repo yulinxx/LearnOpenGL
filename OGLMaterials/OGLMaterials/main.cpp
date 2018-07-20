@@ -37,7 +37,7 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 lightPos(0.2f, 0.0f, 2.0f);
 
 int main()
 {
@@ -178,7 +178,7 @@ int main()
 		// 物体2
 		// ---绘制一个和物体材质一样颜色的立方体 进行对比
 		model = glm::mat4();
-		model = glm::translate(model, glm::vec3(0.3f, 0.8f, 1.3f));
+		model = glm::translate(model, glm::vec3(0.3f, 0.0f, 0.0f));
 		cubeShader.setMat4("model", model);
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);  // 绘制原色的立方体
