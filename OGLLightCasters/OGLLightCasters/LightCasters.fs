@@ -63,6 +63,7 @@ void main()
 	float attenuation = 1.0 / (light.constant + light.linear * distance + 
                 light.quadratic * (distance * distance));
 
+	// 光源至片段的向量与光源的方向向量夹角的点乘
 	// dot返回一个余弦值 角度越小余弦值越大
 	float theta = dot(lightDir, normalize(-light.direction));
 
