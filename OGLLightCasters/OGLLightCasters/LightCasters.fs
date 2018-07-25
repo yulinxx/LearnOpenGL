@@ -66,23 +66,26 @@ void main()
 	// dot返回一个余弦值 角度越小余弦值越大
 	float theta = dot(lightDir, normalize(-light.direction));
 
+	// 内外半径的夹角  此范围内则为柔光处理
 	float epsilon   = light.cutOff - light.outerCutOff;
 	float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);    
 
 	vec4 result;
 
 
+	// 没有平滑边缘的效果
 	////  在光照范围内
 	//if (theta > light.cutOff)	// 两个余弦值比较
 	//{
 	//	// 执行光照计算
-	//	result = vec4(ambient * attenuation + diffuse  * attenuation  * intensity + specular  * attenuation * intensity, 1.0);
+	//	result = vec4(ambient * attenuation + diffuse  * attenuation  + specular  * attenuation , 1.0);
 	//}
 	//else  // 光照范围外，使用环境光，让场景在聚光之外时不至于完全黑暗
 	//{
 	//	result = vec4(light.ambient * vec3(texture(material.diffuse, TexCoords)), 1.0);
 	//}
 
+	// 平滑的边缘的效果
 	result = vec4(ambient * attenuation + diffuse  * attenuation  * intensity+ specular  * attenuation * intensity, 1.0); 
 
 	FragColor = result;
