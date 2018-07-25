@@ -120,19 +120,15 @@ int main()
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
 	};
 
-	glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(2.0f,  5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f,  2.0f, -2.5f),
-		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
+	glm::vec3 cubePositions[] = { // 立方体位置
+		glm::vec3(0.0f,  0.0f,  0.0f),			glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),		glm::vec3(-3.8f, -2.0f, -12.3f),
+		glm::vec3(2.4f, -0.4f, -3.5f),		glm::vec3(-1.7f,  3.0f, -7.5f),
+		glm::vec3(1.3f, -2.0f, -2.5f),		glm::vec3(1.5f,  2.0f, -2.5f),
+		glm::vec3(1.5f,  0.2f, -0.1f),			glm::vec3(-1.3f,  1.0f, 0.0f)
 	};
 
+	// 立方体
 	unsigned int cubeVAO, cubeVBO;
 
 	glGenVertexArrays(1, &cubeVAO);
@@ -164,13 +160,13 @@ int main()
 
 	glBindVertexArray(0);
 
-	unsigned int diffuseMap = loadTexture("../res/container.png");	 // 纹理
+	// 纹理
+	unsigned int diffuseMap = loadTexture("../res/container.png");	
 	unsigned int specularMap = loadTexture("../res/container_specular.png");
 
-	//cubeShader.useShaderProgram();
-	//cubeShader.setInt("material.diffuse", 0);
-
-	//cubeShader.setInt("material.specular", 1);	
+	cubeShader.useShaderProgram();
+	cubeShader.setInt("material.diffuse", 0);
+	cubeShader.setInt("material.specular", 1);	
 
 	while (!glfwWindowShouldClose(pWnd))
 	{
@@ -194,11 +190,19 @@ int main()
 		cubeShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
 		cubeShader.setFloat("light.constant", 1.0f);
-		cubeShader.setFloat("light.linear", 0.09f);
-		cubeShader.setFloat("light.quadratic", 0.032f);
+		cubeShader.setFloat("light.linear", 0.1f);
+		cubeShader.setFloat("light.quadratic", 0.01f);
+
+		cubeShader.setVec3("light.direction", camera.Front);
+
+		// 灯照范围 半径
+		// radians 弧度 12.5度转为弧度, 然后cos求值 约0.976
+		//float dTemp = glm::cos(glm::radians(12.5f));
+		cubeShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+
+		cubeShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
 
 		// 材质定义
-		//cubeShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
 		cubeShader.setFloat("material.shininess", 64.0f);
 
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),
@@ -221,10 +225,10 @@ int main()
 
 		glBindVertexArray(cubeVAO);			// VAO
 		glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);	// 绘制经灯光照射的立方体
+
+		// 绘制十个立方体
 		for (unsigned int i = 0; i < 10; i++)
 		{
-			// calculate the model matrix for each object and pass it to shader before drawing
 			glm::mat4 model;
 			model = glm::translate(model, cubePositions[i]);
 			float angle = 20.0f * i;
@@ -233,7 +237,6 @@ int main()
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
-
 
 		// ---灯泡
 		lampShader.useShaderProgram();
@@ -244,7 +247,6 @@ int main()
 		model = glm::translate(model, lightPos);
 		model = glm::scale(model, glm::vec3(0.2f)); // 缩小立方体
 		lampShader.setMat4("model", model);		  // 小立方体代表灯泡
-
 
 		glBindVertexArray(lampVAO);	// VAO 切换
 		glBindBuffer(GL_ARRAY_BUFFER, lampVBO);
