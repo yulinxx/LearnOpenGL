@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGLLightingMaps", "OGLLight
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGLMultipleLights", "OGLMultipleLights\OGLMultipleLights\OGLMultipleLights.vcxproj", "{D918F968-64A2-406C-94D4-4815DC245DD8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGLModelLoad", "OGLModelLoad\OGLModelLoad.vcxproj", "{215B25C7-881C-4872-9424-2D47D3CFD1C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -113,6 +115,14 @@ Global
 		{D918F968-64A2-406C-94D4-4815DC245DD8}.Release|x64.Build.0 = Release|x64
 		{D918F968-64A2-406C-94D4-4815DC245DD8}.Release|x86.ActiveCfg = Release|Win32
 		{D918F968-64A2-406C-94D4-4815DC245DD8}.Release|x86.Build.0 = Release|Win32
+		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Debug|x64.ActiveCfg = Debug|x64
+		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Debug|x64.Build.0 = Debug|x64
+		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Debug|x86.ActiveCfg = Debug|Win32
+		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Debug|x86.Build.0 = Debug|Win32
+		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Release|x64.ActiveCfg = Release|x64
+		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Release|x64.Build.0 = Release|x64
+		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Release|x86.ActiveCfg = Release|Win32
+		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
