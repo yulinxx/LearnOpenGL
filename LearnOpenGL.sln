@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGLBasicLighting", "OGLBasicLighting\OGLBasicLighting\OGLBasicLighting.vcxproj", "{1376D454-300C-4024-B6A1-2877FB86279B}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OglCamera", "OglCamera\OglCamera\OglCamera.vcxproj", "{135D2908-47EE-45F8-B647-71BE9197C804}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGLColor", "OGLColor\OGLColor\OGLColor.vcxproj", "{645F4DD0-A3CC-481F-A9D6-CCC9FEDE439D}"
@@ -27,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGLMultipleLights", "OGLMul
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGLModelLoad", "OGLModelLoad\OGLModelLoad.vcxproj", "{215B25C7-881C-4872-9424-2D47D3CFD1C8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGLBasicLighting", "OGLBasicLighting\OGLBasicLighting.vcxproj", "{1376D454-300C-4024-B6A1-2877FB86279B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -35,14 +35,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1376D454-300C-4024-B6A1-2877FB86279B}.Debug|x64.ActiveCfg = Debug|x64
-		{1376D454-300C-4024-B6A1-2877FB86279B}.Debug|x64.Build.0 = Debug|x64
-		{1376D454-300C-4024-B6A1-2877FB86279B}.Debug|x86.ActiveCfg = Debug|Win32
-		{1376D454-300C-4024-B6A1-2877FB86279B}.Debug|x86.Build.0 = Debug|Win32
-		{1376D454-300C-4024-B6A1-2877FB86279B}.Release|x64.ActiveCfg = Release|x64
-		{1376D454-300C-4024-B6A1-2877FB86279B}.Release|x64.Build.0 = Release|x64
-		{1376D454-300C-4024-B6A1-2877FB86279B}.Release|x86.ActiveCfg = Release|Win32
-		{1376D454-300C-4024-B6A1-2877FB86279B}.Release|x86.Build.0 = Release|Win32
 		{135D2908-47EE-45F8-B647-71BE9197C804}.Debug|x64.ActiveCfg = Debug|x64
 		{135D2908-47EE-45F8-B647-71BE9197C804}.Debug|x64.Build.0 = Debug|x64
 		{135D2908-47EE-45F8-B647-71BE9197C804}.Debug|x86.ActiveCfg = Debug|Win32
@@ -123,6 +115,14 @@ Global
 		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Release|x64.Build.0 = Release|x64
 		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Release|x86.ActiveCfg = Release|Win32
 		{215B25C7-881C-4872-9424-2D47D3CFD1C8}.Release|x86.Build.0 = Release|Win32
+		{1376D454-300C-4024-B6A1-2877FB86279B}.Debug|x64.ActiveCfg = Debug|x64
+		{1376D454-300C-4024-B6A1-2877FB86279B}.Debug|x64.Build.0 = Debug|x64
+		{1376D454-300C-4024-B6A1-2877FB86279B}.Debug|x86.ActiveCfg = Debug|Win32
+		{1376D454-300C-4024-B6A1-2877FB86279B}.Debug|x86.Build.0 = Debug|Win32
+		{1376D454-300C-4024-B6A1-2877FB86279B}.Release|x64.ActiveCfg = Release|x64
+		{1376D454-300C-4024-B6A1-2877FB86279B}.Release|x64.Build.0 = Release|x64
+		{1376D454-300C-4024-B6A1-2877FB86279B}.Release|x86.ActiveCfg = Release|Win32
+		{1376D454-300C-4024-B6A1-2877FB86279B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
