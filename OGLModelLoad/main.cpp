@@ -77,11 +77,11 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// -------------------------
-	Shader ourShader("model_loading.vs", "model_loading.fs");
+	Shader modelShader("model_loading.vs", "model_loading.fs");
 	Shader lampShader("lamp.vs", "lamp.fs");
 
 	// load models
-	Model ourModel("../res/nanosuit/nanosuit.obj");
+	Model modelObj("../res/nanosuit/nanosuit.obj");
 
 
 	glm::vec3 ptLightPos[] = {
@@ -110,20 +110,20 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// don't forget to enable shader before setting uniforms
-		ourShader.useShaderProgram();
+		modelShader.useShaderProgram();
 
 		// view/projection transformations
 		glm::mat4 matProj = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 matView = camera.GetViewMatrix();
-		ourShader.setMat4("projection", matProj);
-		ourShader.setMat4("view", matView);
+		modelShader.setMat4("projection", matProj);
+		modelShader.setMat4("view", matView);
 
 		// render the loaded model
 		glm::mat4 matModel;
 		matModel = glm::translate(matModel, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
 		matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
-		ourShader.setMat4("model", matModel);
-		//ourModel.Draw(ourShader);
+		modelShader.setMat4("modelObj", matModel);
+		//modelObj.Draw(modelShader);
 
 
 		// Draw the lamps
@@ -136,7 +136,7 @@ int main()
 			//matModel = glm::translate(matModel, ptLightPos[i]);
 			//matModel = glm::scale(matModel, glm::vec3(0.3f, 0.3f, 0.3f)); // Downscale lamp object (a bit too large)
 			glUniformMatrix4fv(glGetUniformLocation(lampShader.m_ID, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-			ourModel.Draw(lampShader);
+			modelObj.Draw(lampShader);
 		}
 
 
